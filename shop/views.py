@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout, authenticate
 # Create your views here.
 
 def store(request):
-    context = {}
+    context = {'products': range(15)}
     return render(request, 'shop/store.html', context)
 
 def cart(request):
