@@ -26,3 +26,6 @@ def signup(request):
     context = {}
     return render(request, 'shop/signup.html', context)
 
+def logout(request):
+    logout(request)
+    return redirect('shop:login')
