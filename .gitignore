@@ -9,6 +9,9 @@ media
 # Backup files # 
 *.bak 
 
+# the images that are uploaded for the products
+shop/static/shop/images/
+
 # If you are using PyCharm # 
 .idea/**/workspace.xml 
 .idea/**/tasks.xml 
