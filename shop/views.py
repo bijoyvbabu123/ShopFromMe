@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+from .models import *
 
 # Create your views here.
 
 def store(request):
-    context = {'products': range(15)}
+    available_products = Product.get_all_available_products()
+    context = {'available_products':available_products}
     return render(request, 'shop/store.html', context)
 
 def cart(request):
