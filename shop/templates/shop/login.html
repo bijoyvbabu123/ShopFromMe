@@ -1,10 +1,64 @@
 {% extends "shop/basepage.html" %}
 {% load static %}
-
+<!-- don't format the document..it will cause problem with the if block -->
 {% block title %}
     ShopFromMe - login
 {% endblock %}
 
 {% block content %}
-    <h4>login page</h4>
+
+<!--Here instead of using forms.fields, the input elements are manually hardcoded with excatly the same attributes of the corresponding 
+form.fields. This id done to add bootstrap class to the elements. The form data can be directly read as if from a django generated form, since 
+same attributes are used here also-->
+
+<div class="container py-4">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-10 col-md-8 col-lg-6">
+            <!-- Form -->
+            <form class="form-example" action="" method="POST">
+
+                {% csrf_token %}
+
+                <div class="text-center py-4">
+                    <h1 style="margin: 0 auto;">Log In</h1>
+                </div>
+
+                <!-- Input fields -->
+
+                <div class="form-group">
+                    <label for="id_username">Username:</label>
+                    <input id="id_username" name="username" type="text" maxlength="150" autofocus required
+                        class="form-control" {% if form.username.value %} value="{{ form.username.value }}" {% endif %}
+                        autocapitalize="none" autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password">Password:</label>
+                    <input id="id_password" name="password" type="password" autocomplete="current-password" required
+                        class="form-control">
+                </div>
+
+                <!-- checking if any error is present and displaying only the error 'messages' not the headings. It is displayed as list -->
+                {% if form.errors.values %}
+                <div class="alert alert-warning">
+                    {% for e in form.errors.values %}
+                        {{ e }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="text-center py-2">
+                    <button type="submit" class="btn btn-primary btn-customized">Log In</button>
+                </div>
+                <!-- End input fields -->
+
+            </form>
+            <!-- Form end -->
+        </div>
+    </div>
+</div>
+
+<script>
+    console.log("{{form.errors}}")
+</script>
 {% endblock content %}
