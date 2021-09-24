@@ -63,7 +63,13 @@ same attributes are used here also-->
     </div>
 </div>
 
-<script>
-    console.log("{{form.errors}}")
-</script>
+
+{% for message in messages %}
+    <script>
+        var username = "{{ message }}";
+    </script>
+{% endfor %}
+
+<script src="{% static 'shop/js/login.js' %}"></script>
+
 {% endblock content %}

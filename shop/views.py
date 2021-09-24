@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
 from .models import *
 from .forms import *
 
@@ -33,9 +34,10 @@ def signup(request):
     form = SignUpForm()
     if request.method == "POST":
         form = SignUpForm(request.POST)
-        #if form.is_valid():
-         #   form.save()
-          #  return redirect('shop:store')
+        if form.is_valid():
+            form.save()
+            messages.success(request, form.cleaned_data.get('username'))
+            return redirect('shop:login')
           
     # even though the form is not used for the form elements, it is used for the error messages
     context = {'form':form}
