@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm, fields
 from django import forms
 
@@ -11,8 +12,14 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
-# overriding the builtin form since it had a bug that did'nt show the inactive user error message
+# overriding the builtin form since it had a bug that did'nt show proper error messages
 class LogInForm(AuthenticationForm):
+    error_messages = {
+        'invalid': '''No Account Exists !!''',
+        'inactive': '''This account is Inactive.''',
+        'incorrect': '''Incorrect Password !!''',
+    }
+
     def clean(self):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
@@ -26,12 +33,21 @@ class LogInForm(AuthenticationForm):
                     user_temp = None
                 
                 if user_temp is not None:
-                    self.confirm_login_allowed(user_temp)
+                    if not user_temp.is_active:
+                        raise ValidationError(
+                        self.error_messages['inactive'],
+                        code='inactive',
+                    )
+                    else:
+                        raise ValidationError(
+                        self.error_messages['incorrect'],
+                        code='incorrect',
+                    )
+                    
                 else:
-                    raise forms.ValidationError(
-                        self.error_messages['invalid_login'],
-                        code='invalid_login',
-                        params={'username': self.username_field.verbose_name},
+                    raise ValidationError(
+                        self.error_messages['invalid'],
+                        code='invalid',
                     )
 
         return self.cleaned_data
