@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from .models import *
+from .forms import *
 
 # Create your views here.
 
@@ -26,7 +27,15 @@ def login(request):
     return render(request, 'shop/login.html', context)
 
 def signup(request):
-    context = {}
+    form = SignUpForm()
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        #if form.is_valid():
+         #   form.save()
+          #  return redirect('shop:store')
+          
+    # even though the form is not used for the form elements, it is used for the error messages
+    context = {'form':form}
     return render(request, 'shop/signup.html', context)
 
 def logout_user(request):
