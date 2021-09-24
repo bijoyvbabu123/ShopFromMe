@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import logout, authenticate # login
 from django.contrib import messages
+from django.contrib import auth
 from .models import *
 from .forms import *
 
@@ -27,6 +28,10 @@ def login(request):
     form = LogInForm()
     if request.method == "POST":
         form = LogInForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            auth.login(request, user)  # called like this, since the view name 'login' overrides auth.login
+            return redirect('shop:store')
     context = {'form':form}
     return render(request, 'shop/login.html', context)
 
