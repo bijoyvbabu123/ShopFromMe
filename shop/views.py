@@ -23,7 +23,10 @@ def order_history(request):
     return render(request, 'shop/orderhistory.html', context)
 
 def login(request):
-    context = {}
+    form = LogInForm()
+    if request.method == "POST":
+        form = LogInForm(data=request.POST)
+    context = {'form':form}
     return render(request, 'shop/login.html', context)
 
 def signup(request):
