@@ -18,7 +18,8 @@ def cart(request):
     return render(request, 'shop/cart.html', context)
 
 def checkout(request):
-    context = {}
+    items = Product.get_all_available_products()
+    context = {'items':items}
     return render(request, 'shop/checkout.html', context)
 
 def order_history(request):
