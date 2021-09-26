@@ -6,5 +6,122 @@
 {% endblock %}
 
 {% block content %}
-    <h4>checkout</h4>
+    <div class="container-fluid">
+
+        <div class="row">
+            <!--form for delivery address-->
+            <div class="col-12 col-md-6 col-lg-6 card py-2  justify-content-center align-items-center">
+                <div class="col-10">
+                    <form action="" method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="text-center py-3">
+                            <h5>Shipping Details</h5>
+                        </div>
+
+                        <!--input fields-->
+                        <div class="form-group">
+                            <label for="id_name">Name:</label>
+                            <input id="id_name" name="name" type="text" maxlength="150" autofocus required
+                                class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_address">address:</label>
+                            <input id="id_address" name="address" type="text" maxlength="150" required
+                                class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_city">City:</label>
+                            <input id="id_city" name="city" type="text" maxlength="150" required
+                                class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_district">District:</label>
+                            <input id="id_district" name="district" type="text" maxlength="150" required
+                                class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_state">State:</label>
+                            <input id="id_state" name="state" type="text" maxlength="150" required
+                                class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_pincode">PIN code:</label>
+                            <input id="id_pincode" name="pincode" type="number" maxlength="150" required
+                                class="form-control">
+                        </div>
+
+                        <div class="text-center py-2">
+                            <button type="submit" class="btn btn-success btn-block">Continue</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <!--order summary-->
+            <div class="col-12 col-md-6 col-lg-6 card py-2">
+                <div>
+
+                    <div class="py-2 px-2">
+                        <a href="{% url 'shop:cart' %}" class="btn btn-secondary">&#8592 Cart</a>
+                    </div>
+
+                    <div class="text-center">
+                        <h5 class="card-title">Order Summary</h5>
+                    </div>
+                    <hr>
+    
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center py-2">
+                            <h5>Items: 23</h5>
+                        </div>
+                        <div class="col-12 col-sm-6 text-center py-2">
+                            <h5>Total:₹ 100000</h5>
+                        </div>
+                    </div>
+                    <hr>
+                        
+                    <div class="row">
+
+                        <!--each item-->
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="row pt-1">
+                                    <h6 class="card-title col-12 col-sm-8 col-md-6 col-lg-6 text-center"><i>Product name</i></h6>
+                                    <h6 class="card-title col-12 col-sm-4 col-md-6 col-lg-6 text-center"><i>₹ 500000</i></h6>
+                                </div>
+                                
+                                <div class="row">
+                                    <img class="col-12 col-sm-4 col-md-4 col-lg-4 card-img-top" src="{% static 'shop/images/placeholder.png' %}" alt="product image" style="width: 100%; height: 100px; object-fit: contain;"> <!--this will make enough responsive image-->
+                                    <div class="col-12 col-sm-8 col-md-8 col-lg-8">
+                                        <div class="row">
+                                            <!--d-flex... aligns the chid element centrally both hor and ver-->
+                                            <div class="col-6 col-sm-6 d-flex align-items-center justify-content-center" style="height: 100px ;">
+                                                <div class="col-4 d-flex align-items-center justify-content-center">
+                                                    <h6>5</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-sm-6 d-flex align-items-center justify-content-center" style="height: 100px ;">
+                                                <h6>₹ 1550</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
 {% endblock content %}
