@@ -42,3 +42,19 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class OrderItems(models.Model):
+
+    class Meta:
+        verbose_name = "Order Items"
+        verbose_name_plural = "Order Items"
+
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="order_id", blank=False)
+    item = models.ForeignKey(Product, on_delete=models.CASCADE, blank=False) # set on_delete=RESTRICT or PROTECT after denying the permission to delete in Product model
+    quantity = models.PositiveIntegerField()
+    # rate of the product is stored after the order is placed
+    rate = models.DecimalField(max_digits=10, decimal_places=2, blank=False, verbose_name="Rate")
+
+    def __str__(self):
+        return str(self.item)

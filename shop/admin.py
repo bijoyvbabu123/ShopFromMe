@@ -8,10 +8,15 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['user', 'date', 'ref_id', 'total', 'status']
+    list_display = ['id', 'user', 'date', 'ref_id', 'total', 'status']
+
+
+class OrderItemsAdmin(admin.ModelAdmin):
+    list_display = ['order', 'item', 'quantity', 'rate']
 
 
 
 
 admin.site.register(models.Product, ProductAdmin)
 admin.site.register(models.Order, OrderAdmin)
+admin.site.register(models.OrderItems, OrderItemsAdmin)
