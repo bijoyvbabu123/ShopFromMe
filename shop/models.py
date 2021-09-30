@@ -58,3 +58,24 @@ class OrderItems(models.Model):
 
     def __str__(self):
         return str(self.item)
+
+
+class ShippingAddress(models.Model):
+     
+    class Meta:
+         verbose_name = "Shipping Address"
+         verbose_name_plural = "Shipping Address"
+    
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="order_id", blank=False)
+
+    name = models.CharField(max_length=50, blank=False, verbose_name="Name")
+    address = models.CharField(max_length=200, blank=False, verbose_name="Address")
+    city = models.CharField(max_length=100, blank=False, verbose_name="City")
+    district = models.CharField(max_length=100, blank=False, verbose_name="District")
+    state = models.CharField(max_length=100, blank=False, verbose_name="State")
+    pin = models.PositiveIntegerField(blank = False, verbose_name="PIN")
+
+    def __str__(self):
+        return str(self.name + ',' + self.address + ',' + self.city + ',' + self.district + ',' + self.state + ',' + str(self.pin))
+
+    
