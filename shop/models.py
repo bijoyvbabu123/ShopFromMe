@@ -39,3 +39,6 @@ class Order(models.Model):
     ref_id = models.CharField(max_length=100, blank=True, default="")
     # store the total amount only after placing the order
     total = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.id)
