@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import decimal
 
 # Create your models here.
 
@@ -69,6 +70,25 @@ class OrderItems(models.Model):
                     for i in cartorder.orderitems_set.all():
                         numberofitems += i.quantity
         return numberofitems
+
+    #get cart items for current user; para:(request.user); return: list of orderitems, net amount
+    def get_cart_items(customer):
+        items = []
+        netamount = decimal.Decimal(0.00)
+        if customer.is_authenticated:
+            if customer.order_set.all().exists():
+                if customer.order_set.get(status="CART"):
+                    cartorder = customer.order_set.get(status="CART")
+                    items = cartorder.orderitems_set.all()
+                    # i.quantity gives the quantity
+                    # i.item.name gives the item name
+                    # i.item.price gives the item price
+                    # i.item.image.url gives the item image
+                    # {% widthratio i.item.price 1 i.quantity %}  gives product of price and quantity
+                    for i in items:
+                        netamount += (i.quantity * i.item.price)
+        return items, netamount
+
 
 
 class ShippingAddress(models.Model):

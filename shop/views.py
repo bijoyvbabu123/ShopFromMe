@@ -17,20 +17,22 @@ def store(request):
     return render(request, 'shop/store.html', context)
 
 def cart(request):
-    items = Product.get_all_available_products()
+    items, netamount = OrderItems.get_cart_items(request.user)
     numberofcartitems = OrderItems.get_cart_items_number(request.user)
     context = {
         'items':items,
-        'numberofcartitems':numberofcartitems
+        'numberofcartitems':numberofcartitems,
+        'netamount':netamount
     }
     return render(request, 'shop/cart.html', context)
 
 def checkout(request):
-    items = Product.get_all_available_products()
+    items, netamount = OrderItems.get_cart_items(request.user)
     numberofcartitems = OrderItems.get_cart_items_number(request.user)
     context = {
         'items':items,
-        'numberofcartitems':numberofcartitems
+        'numberofcartitems':numberofcartitems,
+        'netamount':netamount
     }
     return render(request, 'shop/checkout.html', context)
 
