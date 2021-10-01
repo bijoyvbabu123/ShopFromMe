@@ -54,10 +54,21 @@ class OrderItems(models.Model):
     item = models.ForeignKey(Product, on_delete=models.CASCADE, blank=False) # set on_delete=RESTRICT or PROTECT after denying the permission to delete in Product model
     quantity = models.PositiveIntegerField()
     # rate of the product is stored after the order is placed
-    rate = models.DecimalField(max_digits=10, decimal_places=2, blank=False, verbose_name="Rate")
+    rate = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="Rate")  # blank and null is set to true...correction
 
     def __str__(self):
         return str(self.item)
+    
+    # get number of items in the cart for current user; para: (request.user)
+    def get_cart_items_number(customer):
+        numberofitems = 0
+        if customer.is_authenticated:
+            if customer.order_set.all().exists():
+                if customer.order_set.get(status="CART"):
+                    cartorder = customer.order_set.get(status="CART")
+                    for i in cartorder.orderitems_set.all():
+                        numberofitems += i.quantity
+        return numberofitems
 
 
 class ShippingAddress(models.Model):

@@ -9,21 +9,36 @@ from .forms import *
 
 def store(request):
     available_products = Product.get_all_available_products()
-    context = {'available_products':available_products}
+    numberofcartitems = OrderItems.get_cart_items_number(request.user)
+    context = {
+        'available_products':available_products,
+        'numberofcartitems':numberofcartitems
+    }
     return render(request, 'shop/store.html', context)
 
 def cart(request):
     items = Product.get_all_available_products()
-    context = {'items':items}
+    numberofcartitems = OrderItems.get_cart_items_number(request.user)
+    context = {
+        'items':items,
+        'numberofcartitems':numberofcartitems
+    }
     return render(request, 'shop/cart.html', context)
 
 def checkout(request):
     items = Product.get_all_available_products()
-    context = {'items':items}
+    numberofcartitems = OrderItems.get_cart_items_number(request.user)
+    context = {
+        'items':items,
+        'numberofcartitems':numberofcartitems
+    }
     return render(request, 'shop/checkout.html', context)
 
 def order_history(request):
-    context = {}
+    numberofcartitems = OrderItems.get_cart_items_number(request.user)
+    context = {
+        'numberofcartitems':numberofcartitems
+    }
     return render(request, 'shop/orderhistory.html', context)
 
 def login(request):
