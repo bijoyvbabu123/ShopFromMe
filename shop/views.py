@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout, authenticate # login
 from django.contrib import messages
 from django.contrib import auth
+from django.contrib.auth.models import User
+from django.http import JsonResponse
 from .models import *
 from .forms import *
 
@@ -10,6 +12,20 @@ from .forms import *
 def store(request):
     available_products = Product.get_all_available_products()
     numberofcartitems = OrderItems.get_cart_items_number(request.user)
+    
+    # if the request is ajax.....
+    if request.is_ajax :
+        if request.method == "GET":
+            if request.GET.get("action") == 'cartitems':
+                customer = User.objects.get(username=request.GET.get("customer"))
+                cartitems, netamount = OrderItems.get_cart_items(customer)
+                # should make a dictionary {'id':quatity, 'id2': quantity,....} and pass the dictionary to JsonResponse
+                items = {}
+                for i in cartitems:
+                    items[i.item.id] = i.quantity
+                return JsonResponse(items)
+
+
     context = {
         'available_products':available_products,
         'numberofcartitems':numberofcartitems
