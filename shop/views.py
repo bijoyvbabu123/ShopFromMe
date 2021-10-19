@@ -17,10 +17,12 @@ def store(request):
     if request.is_ajax :
         if request.method == "GET":
             if request.GET.get("action") == 'cartitems':
+                items = {}
+                if request.GET.get("customer") == "AnonymousUser":
+                    return JsonResponse(items)
                 customer = User.objects.get(username=request.GET.get("customer"))
                 cartitems, netamount = OrderItems.get_cart_items(customer)
                 # should make a dictionary {'id':quatity, 'id2': quantity,....} and pass the dictionary to JsonResponse
-                items = {}
                 for i in cartitems:
                     items[i.item.id] = i.quantity
                 return JsonResponse(items)
